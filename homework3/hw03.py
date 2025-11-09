@@ -135,7 +135,6 @@ def count_dollars(total):
         return partition(total-m, m) + partition(total, next_smaller_dollar(m))
     return partition(total, 100)
     
-    
 
 
 def next_larger_dollar(bill):
