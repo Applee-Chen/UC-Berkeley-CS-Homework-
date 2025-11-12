@@ -12,7 +12,13 @@ def shuffle(s):
     ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']
     """
     assert len(s) % 2 == 0, 'len(seq) must be even'
-    "*** YOUR CODE HERE ***"
+    shuffled_list_1 = [s[i] for i in range(len(s)//2)]
+    shuffled_list_2 = [s[len(s)//2 + i] for i in range(len(s)//2)]
+    final_list = []
+    for i in range(len(s)//2):
+        final_list.append(shuffled_list_1[i])
+        final_list.append(shuffled_list_2[i])
+    return final_list
 
 
 def deep_map(f, s):
@@ -37,7 +43,17 @@ def deep_map(f, s):
     >>> s3 is s2[1]
     True
     """
-    "*** YOUR CODE HERE ***"
+    def map_2(f,s):
+        for i in range(len(s)):
+            if not isinstance(s[i], list):
+                s[i] = f(s[i])
+            elif isinstance(s[i], list):
+                s[i] = map_2(f, s[i])
+        return s
+    map_2(f,s)
+
+
+    
 
 
 HW_SOURCE_FILE=__file__
@@ -46,12 +62,12 @@ HW_SOURCE_FILE=__file__
 def planet(mass):
     """Construct a planet of some mass."""
     assert mass > 0
-    "*** YOUR CODE HERE ***"
+    return ['planet', mass]
 
 def mass(p):
     """Select the mass of a planet."""
     assert is_planet(p), 'must call mass on a planet'
-    "*** YOUR CODE HERE ***"
+    return p[1]
 
 def is_planet(p):
     """Whether p is a planet."""
@@ -103,7 +119,15 @@ def balanced(m):
     >>> check(HW_SOURCE_FILE, 'balanced', ['Index'])
     True
     """
-    "*** YOUR CODE HERE ***"
+    mobile, left, right = m
+    arm_l, l_length, l_planet = left
+    arm_r, r_length, r_planet = right
+    planet_1, l_weight = l_planet
+    planet_2, r_weight = r_planet
+    if l_length*l_weight == r_length*r_weight:
+        return True
+    else:
+        return False
 
 
 def berry_finder(t):
