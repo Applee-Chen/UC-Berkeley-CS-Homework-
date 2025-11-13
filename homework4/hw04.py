@@ -120,15 +120,19 @@ def balanced(m):
     True
     """
     mobile, left, right = m
-    arm_l, l_length, l_planet = left
-    arm_r, r_length, r_planet = right
-    planet_1, l_weight = l_planet
-    planet_2, r_weight = r_planet
-    if l_length*l_weight == r_length*r_weight:
-        return True
-    else:
+    arm_l, l_length, l_object = left
+    arm_r, r_length, r_object = right
+    if l_length * total_mass(l_object) != r_length * total_mass(r_object):
         return False
-
+    if is_mobile(l_object) is True and is_mobile(r_object) is True:
+        return balanced(l_object) and balanced(r_object)
+    elif is_mobile(l_object) is True and is_planet(r_object) is True:
+        return balanced(l_object)
+    elif is_planet(l_object) is True and is_mobile(r_object) is True:
+        return balanced(r_object)
+    else:
+        if l_length * total_mass(l_object) == r_length * total_mass(r_object):
+            return True
 
 def berry_finder(t):
     """Returns True if t contains a node with the value 'berry' and 
@@ -147,7 +151,19 @@ def berry_finder(t):
     >>> berry_finder(t)
     True
     """
-    "*** YOUR CODE HERE ***"
+    def flatten_tree(t):
+        nodes = []
+        for element in t:
+            if isinstance(element, list):
+                nodes.extend(flatten_tree(element))
+            else:
+                nodes.append(element)
+        return nodes
+    list_of_nodes = flatten_tree(t)
+    if 'berry' in list_of_nodes:
+        return True
+    else:
+        return False
 
 
 HW_SOURCE_FILE=__file__
@@ -162,7 +178,21 @@ def max_path_sum(t):
     >>> max_path_sum(t2) # 5, 2, 10
     17
     """
-    "*** YOUR CODE HERE ***"
+    def list_of_paths(t):
+        root = t[0]
+        paths = []
+        if len(t) == 1:
+            return [[root]]
+        else:
+            for branch in branches(t):
+                child_paths = list_of_paths(branch)
+                for path in child_paths:
+                    paths.append([root] + path)
+        return paths
+    all_paths = list_of_paths(t)
+    all_sums = [sum(path) for path in all_paths]
+    return max(all_sums)
+
 
 
 def mobile(left, right):
