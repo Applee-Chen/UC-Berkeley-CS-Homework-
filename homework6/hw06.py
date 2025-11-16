@@ -153,14 +153,13 @@ def deep_map_mut(func, s):
     <9 <16> 25 36>
     """
     if s is Link.empty:
-        return None
-    if isinstance(s.first, Link) is True:
+        return
+    if isinstance(s.first, Link):
         deep_map_mut(func, s.first)
-    elif isinstance(s.first, Link) is False:
+    else:
         s.first = func(s.first)
     deep_map_mut(func, s.rest)
     
-
 
 
 def two_list(vals, counts):
