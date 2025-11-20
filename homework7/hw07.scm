@@ -11,11 +11,12 @@
 (define (repeatedly-cube n x)
   (if (zero? n)
       x
-      (let (_________________)
+      (let ((y (repeatedly-cube (- n 1) x)))
         (* y y y))))
 
-(define (cddr s) (cdr (cdr s)))
 
-(define (cadr s) 'YOUR-CODE-HERE)
+(define (cddr s) (cdr (cdr s))) 
 
-(define (caddr s) 'YOUR-CODE-HERE)
+(define (cadr s) (car (cdr s)))
+
+(define (caddr s) (car (cddr s)))
