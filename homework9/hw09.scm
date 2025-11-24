@@ -1,13 +1,22 @@
-(define (curry-cook formals body) 'YOUR-CODE-HERE)
+(define (curry-cook formals body) 
+  (if (= (length formals) 1) 
+    `(lambda (,(car formals)) ,body)
+      `(lambda (,(car formals)) ,(curry-cook (cdr formals) body))))
 
 (define (curry-consume curry args)
-  'YOUR-CODE-HERE)
+  (define (consume current remaining)
+    (if (null? remaining)
+        current
+        (consume (current (car remaining))
+                 (cdr remaining))))
+  (consume curry args))
+
 
 (define-macro (switch expr options)
   (switch-to-cond (list 'switch expr options)))
 
 (define (switch-to-cond switch-expr)
-  (cons _________
+  (cons 'cond
         (map (lambda (option)
-               (cons _______________ (cdr option)))
+               (cons `(equal? ,(car (cdr switch-expr)) ,(car option)) (cdr option)))
              (car (cdr (cdr switch-expr))))))
